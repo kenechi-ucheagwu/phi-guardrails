@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phi-guardrails"
+dynamic = ["version"]
+description = "Keep patient identifiers out of git history with a keyed-hash roster, git hooks and a full-history scan."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Kenechi Ucheagwu" }]
+requires-python = ">=3.10"
+dependencies = []
+keywords = ["hipaa", "phi", "healthcare", "git-hooks", "pre-commit", "privacy"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Healthcare Industry",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Version Control :: Git",
+]
+
+[project.optional-dependencies]
+pdf = ["pymupdf>=1.23"]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+phi-guard = "phi_guardrails.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "phi_guardrails.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["phi_guardrails*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
+addopts = "-q"
