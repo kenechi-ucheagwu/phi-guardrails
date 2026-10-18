@@ -31,7 +31,7 @@ staff names ----------+-- phi-guard build --> roster.v1.json (HMAC digests only)
 ## Quick start
 
 ```bash
-git clone https://github.com/DaDabbler/phi-guardrails
+git clone https://github.com/kenechi-ucheagwu/phi-guardrails
 cd phi-guardrails
 python -m pip install -e .
 
