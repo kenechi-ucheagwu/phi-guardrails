@@ -480,6 +480,18 @@ def test_refuses_a_shallow_clone(repo, scanner, tmp_path):
         history.scan_history(shallow, scanner)
 
 
+def test_scans_a_mirror_clone(repo, scanner, tmp_path):
+    p = PATIENTS[2]
+    commit(repo, {"exports/denials.csv": f"name,dob\n{p.last} {p.first},{p.dob}\n"}, "add export")
+    git(repo, "branch", "-q", "old-work")
+    mirror = tmp_path / "repo.git"
+    git(tmp_path, "clone", "-q", "--mirror", repo.as_uri(), str(mirror))
+    report = history.scan_history(mirror, scanner)
+    assert report["repo"] == "repo.git"
+    assert findings_for(report, "exports/denials.csv")
+    assert_no_values(json.dumps(report))
+
+
 def test_phi_ok_lines_are_counted_not_hidden(repo, scanner):
     p = PATIENTS[3]
     commit(repo, {"docs.py": f'EXAMPLE = "{p.full_name}"  # phi-ok: synthetic example\n'}, "docs")

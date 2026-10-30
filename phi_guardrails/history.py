@@ -477,7 +477,10 @@ def scan_history(repo: Path, scanner: Scanner) -> dict:
     if _git(repo, "rev-parse", "--is-shallow-repository").strip() == b"true":
         raise ScanError("this is a shallow clone, so part of the history is missing; fetch all of it first "
                         "(git fetch --unshallow, or fetch-depth: 0 in GitHub Actions)")
-    toplevel = _git(repo, "rev-parse", "--show-toplevel").decode("utf-8", "replace").strip()
+    # A bare or mirror clone has no work tree, so its git folder names the report.
+    bare = _git(repo, "rev-parse", "--is-bare-repository").strip() == b"true"
+    where = _git(repo, "rev-parse", "--absolute-git-dir" if bare else "--show-toplevel")
+    toplevel = where.decode("utf-8", "replace").strip()
     objects = _object_paths(repo)
     allowed = binary_allowlist(repo, "HEAD")
     report = {
