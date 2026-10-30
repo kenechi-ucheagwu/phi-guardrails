@@ -1,5 +1,7 @@
 # phi-guardrails
 
+[![ci](https://github.com/kenechi-ucheagwu/phi-guardrails/actions/workflows/ci.yml/badge.svg)](https://github.com/kenechi-ucheagwu/phi-guardrails/actions/workflows/ci.yml)
+
 Git hooks and a full-history scan that keep patient identifiers out of a code repository, without the guard itself holding a readable patient list.
 
 Every name, date of birth and ID in this repository is synthetic.
@@ -85,7 +87,7 @@ Result: findings; fix them before this repository goes public
 | `check FILE...` | Check whole files on disk. |
 | `install-hooks` | Install `pre-commit`, `pre-merge-commit` and `commit-msg` hooks that run with this Python interpreter. |
 | `pre-commit`, `commit-msg FILE` | What the hooks run. |
-| `scan-history [REPO]` | Scan every blob reachable from any ref under every path it has had, every commit and tag message, and every ref name. `--json OUT` writes the full report. |
+| `scan-history [REPO]` | Scan every blob reachable from any ref under every path it has had, every commit and tag message, and every ref name. `REPO` can be a bare or `--mirror` clone. `--json OUT` writes the full report. |
 
 Every command that reads the roster takes `--roster-dir` (or reads `PHI_ROSTER_DIR`), and `--no-roster` runs only the pattern and secret checks. Exit codes: 0 clean, 1 findings, files needing review, or a blocked commit, 2 usage or setup error.
 
@@ -98,7 +100,7 @@ Every command that reads the roster takes `--roster-dir` (or reads `PHI_ROSTER_D
 - **Commits check only the lines they add.** A repository with old problems can still take new commits. `scan-history` is how you find the old problems.
 - **The commit-msg hook goes by what git says it will drop.** Hooks can't see `git commit --cleanup`, but git's editor template spells it out. The template's file list is skipped only after git's hint that comment lines "will be ignored", and the `commit -v` diff only below a cut line that comes after that hint (or, in the scissors mode, below the first cut line, where git always cuts). So the commit that deletes a patient file isn't blocked for naming it in that list. Every other line is checked, comments included, and so is all of a message from `-m` or `-F`, or one git says it will keep verbatim.
 - **The roster lives outside the repository.** `.gitignore` here ignores `*.key` and `roster*/` as a second line of defense, and the roster warns when it is more than 14 days old so new patients get covered. `--merge` rebuilds keep earlier digests, so deleting an old export never shrinks coverage.
-- **Standard library only.** PDF text extraction is optional (`python -m pip install -e ".[pdf]"`).
+- **Standard library only.** PDF text extraction is optional (`python -m pip install -e ".[pdf]"`). That extra installs PyMuPDF, which is AGPL-licensed; it isn't bundled here, so this repository stays MIT, but check its license before you ship it inside something else.
 
 ## Limits
 
@@ -114,6 +116,10 @@ Every command that reads the roster takes `--roster-dir` (or reads `PHI_ROSTER_D
 ## Where it came from
 
 I run IT operations at a primary-care practice and write its automation in Python: EHR claim workflows, eligibility checks, payer portal reports. I'm also a nursing student. This is a standalone, tested version of the gate that guards that codebase. None of the practice's data is here; the tests build their roster from invented people at runtime.
+
+Its sibling repository, [billing-automation-showcase](https://github.com/kenechi-ucheagwu/billing-automation-showcase), shows the guards I put around billing automation, and its CI runs this scanner over its own history.
+
+Author: Kenechi Ucheagwu. Write-up on [my site](https://kenechi-ucheagwu.github.io/projects/phi-guardrails/); also on [LinkedIn](https://www.linkedin.com/in/kenechi-ucheagwu).
 
 ## What's next
 
