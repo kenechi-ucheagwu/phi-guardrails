@@ -117,7 +117,7 @@ Every command that reads the roster takes `--roster-dir` (or reads `PHI_ROSTER_D
 
 I run IT and billing for a family-medicine practice and build its front-desk and billing tools in Python. I built this after auditing my own repositories before making any of them public. I'm also in nursing school. None of the practice's data is here; the tests build their roster from invented people at runtime.
 
-Its sibling repository, [billing-automation-showcase](https://github.com/kenechi-ucheagwu/billing-automation-showcase), shows the guards I put around billing automation, and its CI runs this scanner over its own history.
+Its sibling repository, [billing-automation-showcase](https://github.com/kenechi-ucheagwu/billing-automation-showcase), is a demo of guarded billing changes against a mock EHR, and its CI runs this scanner over its own history.
 
 Author: Kenechi Ucheagwu. Write-up on [my site](https://kenechi-ucheagwu.github.io/projects/phi-guardrails/); also on [LinkedIn](https://www.linkedin.com/in/kenechi-ucheagwu).
 
