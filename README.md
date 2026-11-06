@@ -115,7 +115,7 @@ Every command that reads the roster takes `--roster-dir` (or reads `PHI_ROSTER_D
 
 ## Where it came from
 
-I run IT operations at a primary-care practice and write its automation in Python: EHR claim workflows, eligibility checks, payer portal reports. I'm also a nursing student. This is a standalone, tested version of the gate that guards that codebase. None of the practice's data is here; the tests build their roster from invented people at runtime.
+I run IT and billing for a family-medicine practice and build its front-desk and billing tools in Python. I built this after auditing my own repositories before making any of them public. I'm also in nursing school. None of the practice's data is here; the tests build their roster from invented people at runtime.
 
 Its sibling repository, [billing-automation-showcase](https://github.com/kenechi-ucheagwu/billing-automation-showcase), shows the guards I put around billing automation, and its CI runs this scanner over its own history.
 
